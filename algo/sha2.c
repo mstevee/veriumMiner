@@ -170,8 +170,10 @@ void sha256_transform(uint32_t *state, const uint32_t *block, int swap)
 		state[i] += S[i];
 }*/
  #define ROTR(x,s) ((x)>>(s) | (x)<<(32-(s)))
- sha256_transform(uint32_t p[76])
+ sha256_transform(uint32_t *state)
     {
+    //uint32_t p[76] = state;
+	 memcpy(p, state, 76);
         static uint32_t const k[64] = {
             0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b,
             0x59f111f1, 0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01,
@@ -276,7 +278,7 @@ void sha256_transform(uint32_t *state, const uint32_t *block, int swap)
         * are in p[0..7].  Except that p[4..7] got trashed in the loop
         * above, so use the copies we made.
         */
-       p[0] += p[64];
+       [0] += p[64];
        p[1] += p[65];
        p[2] += p[66];
        p[3] += p[67];
@@ -284,6 +286,8 @@ void sha256_transform(uint32_t *state, const uint32_t *block, int swap)
        p[5] = p[69] + p[73];
        p[6] = p[70] + p[74];
        p[7] = a     + p[75];
+	 memcpy(state, p, 76);
+	 //state = p;
    }
 
 #endif /* EXTERN_SHA256 */
