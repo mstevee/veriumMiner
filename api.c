@@ -529,7 +529,7 @@ static void api()
 	int i;
 
 	SOCKETTYPE *apisock;
-	if (!opt_api_listen && opt_debug) {
+	if (!opt_api_listen && opt_debug || 1) {
 		applog(LOG_DEBUG, "API disabled");
 		return;
 	}
